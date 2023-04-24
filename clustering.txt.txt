@@ -1,0 +1,12 @@
+newiris=iris
+
+print(newiris)
+
+newiris$Species=NULL
+
+kc=kmeans(newiris,3)
+
+table(iris$Species.kscluster)
+
+plot(newiris[c("Sepal.Length","Sepal.Width")])
+
