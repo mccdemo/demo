@@ -1,0 +1,118 @@
+actvitymain.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/purple_200"
+
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_baseline_menu_24"
+        app:title="MENU" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+///////////////////menu.xml
+
+////////to create menu.xml ->res->right click-> android resource directory ->directory name->menu, and   resource type->menu->ok
+             right click on menu--  menu-> menu resource file-> ok
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/Search"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="never"
+        android:title="Search" />
+
+    <item
+        android:id="@+id/Settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="never"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/email"
+        android:icon="@drawable/ic_baseline_email_24"
+        app:showAsAction="never"
+        android:title="email" />
+
+    <item
+        android:id="@+id/feedback"
+        android:icon="@drawable/ic_baseline_feedback_24"
+        app:showAsAction="never"
+        android:title="feedback" />
+</menu>
+
+
+//////////////kt file
+
+package com.example.menu
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return super.onCreateOptionsMenu(menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId){
+            R.id.Settings->{
+                Toast.makeText(this@MainActivity,"Settings",Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.Search->{
+                Toast.makeText(this@MainActivity,"Search",Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.email->{
+                Toast.makeText(this@MainActivity,"email",Toast.LENGTH_SHORT).show()
+                return true
+            }
+            R.id.feedback->{
+                Toast.makeText(this@MainActivity,"feedback",Toast.LENGTH_SHORT).show()
+                return true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        menu?.getItem(2)?.setEnabled(false)  //to make email disable
+        //menu?.getItem(3)?.isVisible=false
+        return super.onPrepareOptionsMenu(menu)
+    }
+}
