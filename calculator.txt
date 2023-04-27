@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/number1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number 1"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/number2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Number 2"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"/>
+
+    <Button
+        android:id="@+id/subtractButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Subtract"/>
+
+    <Button
+        android:id="@+id/multiplyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Multiply"/>
+
+    <Button
+        android:id="@+id/divideButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Divide"/>
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Result"/>
+
+</LinearLayout>
+
+-----------------------
+kt file
+
+package com.example.myapplication
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var number1EditText: EditText
+    private lateinit var number2EditText: EditText
+    private lateinit var addButton: Button
+    private lateinit var subtractButton: Button
+    private lateinit var multiplyButton: Button
+    private lateinit var divideButton: Button
+    private lateinit var resultTextView: TextView
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        number1EditText = findViewById(R.id.number1)
+        number2EditText = findViewById(R.id.number2)
+        addButton = findViewById(R.id.addButton)
+        subtractButton = findViewById(R.id.subtractButton)
+        multiplyButton = findViewById(R.id.multiplyButton)
+        divideButton = findViewById(R.id.divideButton)
+        resultTextView = findViewById(R.id.resultTextView)
+
+        addButton.setOnClickListener { performOperation("+") }
+        subtractButton.setOnClickListener { performOperation("-") }
+        multiplyButton.setOnClickListener { performOperation("*") }
+        divideButton.setOnClickListener { performOperation("/") }
+    }
+
+    private fun performOperation(operator: String) {
+        val number1 = number1EditText.text.toString().toDouble()
+        val number2 = number2EditText.text.toString().toDouble()
+
+        val result = when (operator) {
+            "+" -> number1 + number2
+            "-" -> number1 - number2
+            "*" -> number1 * number2
+            "/" -> number1 / number2
+            else -> throw IllegalArgumentException("Invalid operator")
+        }
+
+        resultTextView.text = "Result: $result"
+    }
+}
