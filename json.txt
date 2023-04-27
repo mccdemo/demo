@@ -92,3 +92,9 @@ user.kt
 package com.example.prac13
 
 data class User(val name:String?=null,val age:String?=null)
+
+
+steps:
+got to the build gradle and add ->buildFeatures{
+viewBinding:true
+} inside android in gradle
