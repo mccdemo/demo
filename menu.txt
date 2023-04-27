@@ -1,5 +1,4 @@
 actvitymain.xml
-
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,112 +6,76 @@ actvitymain.xml
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/purple_200"
-
-
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/toolbar"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_baseline_menu_24"
-        app:title="MENU" />
-
+        app:navigationIcon="@drawable/baseline_menu_24"
+        app:title="menu"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn1"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Click me"
+        android:textSize="30dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-///////////////////menu.xml
-
-////////to create menu.xml ->res->right click-> android resource directory ->directory name->menu, and   resource type->menu->ok
-             right click on menu--  menu-> menu resource file-> ok
-
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-
-    <item
-        android:id="@+id/Search"
-        android:icon="@drawable/ic_baseline_search_24"
-        app:showAsAction="never"
-        android:title="Search" />
-
-    <item
-        android:id="@+id/Settings"
-        android:icon="@drawable/ic_baseline_settings_24"
-        app:showAsAction="never"
-        android:title="Settings" />
-
-    <item
-        android:id="@+id/email"
-        android:icon="@drawable/ic_baseline_email_24"
-        app:showAsAction="never"
-        android:title="email" />
-
-    <item
-        android:id="@+id/feedback"
-        android:icon="@drawable/ic_baseline_feedback_24"
-        app:showAsAction="never"
-        android:title="feedback" />
-</menu>
-
 
 //////////////kt file
 
 package com.example.menu
 
+import android.graphics.drawable.Icon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(findViewById(R.id.toolbar))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu,menu)
-        return super.onCreateOptionsMenu(menu)
-
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        return when(item.itemId){
-            R.id.Settings->{
-                Toast.makeText(this@MainActivity,"Settings",Toast.LENGTH_SHORT).show()
-                return true
+        val btn1= findViewById<Button>(R.id.btn1)
+        btn1.setOnClickListener{
+            val builder =  AlertDialog.Builder(this)
+            builder.setTitle("Alert Dialog Box")
+            builder.setMessage("Do you want to continue?")
+            builder.setIcon(R.drawable.baseline_add_alert_24)
+            builder.setPositiveButton("yes"){
+                    dialogInterface,which->Toast.makeText(applicationContext,"Cliked yes",Toast.LENGTH_SHORT).show()
             }
-            R.id.Search->{
-                Toast.makeText(this@MainActivity,"Search",Toast.LENGTH_SHORT).show()
-                return true
+            builder.setNegativeButton("no"){
+                    dialogInterface,which->Toast.makeText(applicationContext,"Cliked NO",Toast.LENGTH_SHORT).show()
             }
-            R.id.email->{
-                Toast.makeText(this@MainActivity,"email",Toast.LENGTH_SHORT).show()
-                return true
+            builder.setNeutralButton("CANCEL"){
+                    dialogInterface,which->Toast.makeText(applicationContext,"Cliked cancel",Toast.LENGTH_SHORT).show()
             }
-            R.id.feedback->{
-                Toast.makeText(this@MainActivity,"feedback",Toast.LENGTH_SHORT).show()
-                return true
-            }
-            else -> super.onOptionsItemSelected(item)
+            val alertDialog:AlertDialog=builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
         }
-
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        menu?.getItem(2)?.setEnabled(false)  //to make email disable
-        //menu?.getItem(3)?.isVisible=false
-        return super.onPrepareOptionsMenu(menu)
+    override fun onBackPressed() {
+        val builder=AlertDialog.Builder(this)
+        builder.setTitle("Are you sure?")
+        builder.setMessage("Are you sure you want to close the app ?")
+        builder.setPositiveButton("Yes",{dialogInterface,i->finish()})
+        builder.setNegativeButton("No",{dialogInterface,i->})
+        builder.show()
     }
 }
